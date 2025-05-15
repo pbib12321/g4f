@@ -5,11 +5,9 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,10 +20,11 @@ class Query(BaseModel):
 async def chat(query: Query):
     try:
         response = g4f.ChatCompletion.create(
-            model="chatgpt",
+            model="gptj",
             messages=[{"role": "user", "content": query.text}]
         )
         return {"response": response}
     except Exception as e:
         return {"error": str(e)}
+
 
