@@ -22,8 +22,10 @@ class Query(BaseModel):
 async def chat(query: Query):
     try:
         response = g4f.ChatCompletion.create(
+            model="chatgpt",
             messages=[{"role": "user", "content": query.text}]
         )
         return {"response": response}
     except Exception as e:
         return {"error": str(e)}
+
